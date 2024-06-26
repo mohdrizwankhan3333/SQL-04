@@ -1,0 +1,44 @@
+-- Display all the cities with there postal code in India ?
+
+select * from country; -- country data
+select * from city; -- city data
+select * from address; -- postal codes 
+SELECT 
+    postal_code, city, country
+FROM
+    address
+        INNER JOIN
+    city ON address.city_id = city.city_id
+        INNER JOIN
+    country ON city.country_id = country.country_id
+WHERE
+    country = 'India';
+    
+-- Display the names of actors and the names of the films they have acted in.
+select * from actor; -- names of actor
+select * from film_actor; -- common connection
+select * from film; -- title
+
+SELECT 
+    concat(first_name, " ", last_name) as Name, title
+FROM
+    actor
+        INNER JOIN
+    film_actor ON actor.actor_id = film_actor.actor_id
+        INNER JOIN
+    film ON film.film_id = film_actor.film_id;
+
+-- Display all the actors and total number of films they have acted in.
+
+SELECT 
+    concat(first_name, " ", last_name) as Name, count(title) as count_of_movies
+FROM
+    actor
+        left JOIN
+    film_actor ON actor.actor_id = film_actor.actor_id
+        left JOIN
+    film ON film.film_id = film_actor.film_id
+group by Name
+order by count_of_movies;
+
+
